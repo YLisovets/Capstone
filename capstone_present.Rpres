@@ -1,0 +1,48 @@
+Next Word Prediction 
+========================================================
+author: Yuriy Lisovets
+date: June 10th, 2021
+autosize: true
+
+Coursera Data Science Specialization <br> Capstone Project <br> Johns Hopkins University
+
+
+Objective
+========================================================
+
+This presentation features the Next Word Predict app.
+
+Next Word Prediction is a Shiny app that, taking a phrase (sequence of words) as an input, could predict the word most likely to follow this phrase. This functionality could be used to speed user typing by suggesting the next word to the user and let them select it rather than having to type it themselves.
+
+To provide this functionality I built a 5-gram probabilistic language model and used Stupid Backoff to rank next-word candidates.
+
+The Next Word Prediction app is located at:  
+<https://yuriy.shinyapps.io/shiny_word_predict/>
+
+
+Model Preprocessing
+========================================================
+
+The predictive word model was built from the large corpus of blogs, news and twitter data.
+
+The data was then cleaned using the textclean package: converted to lowercase, removed all non-ascii characters, URLs, email, hash tags, words that containing numbers, profane words, punctuation and whitespace. Replacing: contractions with their multi-word forms, slang with longer word equivalents as well as kerning and word elongation.
+
+The data was then split into tokens (1-5 n-grams) using corpus package.
+
+Various methods were explored to improve speed and accuracy using text mining techniques and data.table package.
+
+
+Performance of App
+========================================================
+
+The Stupid Backoff algorithm is the simplest solution for web-scale n-grams, it allows to compute very quickly a score (rather than a probability) for n-grams on very large datasets (see [literature](http://www.aclweb.org/anthology/D07-1090.pdf)). 
+
+This application achieves 14% top-1 and 22.4% top-3 precision using an independent benchmark and generates predictions in less than 30ms. This language model use 123MB of disk space.
+
+
+Application User Interface
+========================================================
+
+The predicted next word will be shown when the app detects that you have finished typing. Use the slider tool to select up to five next word predictions. In the main panel the top next-word prediction will be displayed in bold typeface along with top predicted words and their scores and used n-grams.
+
+![](app_screenshot.png)
